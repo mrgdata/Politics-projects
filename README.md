@@ -12,10 +12,13 @@
 ## 4. *did* 
 ### Realizo varios ANOVAs y dos modelos de diferencias en diferencias con errores estándares agrupados para evaluar tendencias electorales en las provincias de Murcia y Sevilla (Escrito en R).
 
-## 5. *diagrama partidos* 
+## 5. *ESS_recode*
+### Se elabora un indicador de desigualdad P90/P50 basado en las proporciones de voto según renta y se compara con el mismo indicador de los ingresos, agrupado por países (Escrito en R).
+
+## 6. *diagrama partidos* 
 ### Se elabora una recodificación de datos y un análisis sobre las características sociodemográficas y de opinión de partidos en Alemania y España (Escrito en Python).
 
-## 6. *renta-politica* 
+## 7. *renta-politica* 
 ### Se trata un modelo de segregación residencial similar al de Schelling, que evalúa si es mejor una política de renta mínima o de renta universal para la satisfacción de los agentes (Escrito en NetLogo).
 
 ### PD1. Un análisis de los proyectos puede leerse en mi blog https://medium.com/@mromgar99
