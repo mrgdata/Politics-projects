@@ -1,7 +1,7 @@
 # Proyectos de política
 
 ## 1. *WVS_TFG_Soc* 
-###Es mi TFG, en donde aplico varias regresiones logísticas y bosques aleatorios para tratar de predecir la participación política en América del Norte y América Latina. Además, se elabora un extenso trabajo de manipulación de datos y se utilizan análisis de componentes principales para agrupar variables (Escrito en R).
+### Es mi TFG, en donde aplico varias regresiones logísticas y bosques aleatorios para tratar de predecir la participación política en América del Norte y América Latina. Además, se elabora un extenso trabajo de manipulación de datos y se utilizan análisis de componentes principales para agrupar variables (Escrito en R).
 
 ## 2. *voto de clase*
 ### Realizo varias regresiones logísticas para evaluar qué clases sociales votan a los diferentes bloques ideológicos en España a lo largo del tiempo, controlando por otros factores sociodemográficos (Escrito en R).
