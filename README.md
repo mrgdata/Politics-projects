@@ -18,5 +18,5 @@
 ## 6. *renta-politica* 
 ### Se trata un modelo de segregación residencial similar al de Schelling, que evalúa si es mejor una política de renta mínima o de renta universal para la satisfacción de los agentes (Escrito en NetLogo).
 
-## PD1. Un análisis de los proyectos puede leerse en mi blog https://medium.com/@mromgar99
-## PD2. Los datasets se pueden encontrar públicamente y algunos no los tengo disponibles actualmente. Si me los piden por comentarios, puedo intentar facilitarlos.
+### PD1. Un análisis de los proyectos puede leerse en mi blog https://medium.com/@mromgar99
+### PD2. Los datasets se pueden encontrar públicamente y algunos no los tengo disponibles actualmente. Si me los piden por comentarios, puedo intentar facilitarlos.
