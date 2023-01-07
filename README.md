@@ -18,8 +18,11 @@
 ## 6. *diagrama partidos* 
 ### Se elabora una recodificación de datos y un análisis sobre las características sociodemográficas y de opinión de partidos en Alemania y España (Escrito en Python).
 
-## 7. *renta-politica* 
+## 7.1. *renta-politica* 
 ### Se trata un modelo de segregación residencial similar al de Schelling, que evalúa si es mejor una política de renta mínima o de renta universal para la satisfacción de los agentes (Escrito en NetLogo).
+
+## 7.2. mov
+### Se realiza un análisis exploratorio de los resultados del modelo anterior
 
 ### PD1. Un análisis de los proyectos puede leerse en mi blog https://medium.com/@mromgar99
 ### PD2. Los datasets se pueden encontrar públicamente y algunos no los tengo disponibles actualmente. Si me los piden por comentarios, puedo intentar facilitarlos.
