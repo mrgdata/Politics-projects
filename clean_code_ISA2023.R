@@ -15,7 +15,7 @@ library(vtable)
 
 USUARIO <- Sys.getenv("USERNAME")
 
-df <- read_delim(paste0("C:/Users/",USUARIO,"/OneDrive/Documentos/MEGA/MEGA/Manu/ISA/RCS_PT3_270223_Indexes.csv"), 
+df <- read_delim(paste0("C:/Users/",USUARIO,"/Downloads/RCS_PT3_270223_Indexes.csv"), 
                  delim = ";", escape_double = TRUE, trim_ws = TRUE)
 
 # 
