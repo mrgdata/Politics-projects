@@ -277,3 +277,35 @@ title <- ggdraw() + draw_label("Increase in Housing Satisfaction Based on the ty
 plot_grid(title, plot_grid(a +  theme(legend.position = "none"), b, c, ncol = 3, labels = "AUTO", align = "h"), legend, ncol = 1, rel_heights = c(0.1, 0.9))
 
 #########################################################################################################################
+# estimation of rehab total effect with CI
+lower1 = (1.569-(1.96*0.129))*(0.049-(1.96*0.008))*(-0.642+(1.96*0.014))
+coeff1 = 1.569*0.049*-0.642
+upper1 = (1.569+(1.96*0.129))*(0.049+(1.96*0.008))*(-0.642-(1.96*0.014))
+
+# estimation of eco total effect with CI
+coef2 = -0.037 + (0.047*-0.642)
+lower2 = (-0.037+(1.96*0.009)) + ((0.047-(1.96*0.007))*(-0.642+(1.96*0.014)))
+upper2 = (-0.037-(1.96*0.009)) + ((0.047+(1.96*0.007))*(-0.642-(1.96*0.014)))
+
+coefdata <- data.frame(
+  variables = c("Rehabilitation", "Income level"),
+  coefficient = c(coef1, coef2),
+  lower_bound = c(lower1, lower2),
+  upper_bound = c(upper1, upper2),
+  stringsAsFactors = FALSE
+)
+
+ggplot(coefdata, aes(y = variables, x = coefficient)) +
+  geom_point(size = 4, color = "black") +
+  geom_errorbarh(
+    aes(xmin = lower_bound, xmax = upper_bound),
+    height = 0.3,
+    color = "black",
+    size = 0.8
+  ) +
+  labs(
+    x = "Coefficient and 95% CI",
+    y = "Variable",
+    title = "Estimation of the effects in the SEM model"
+  ) +
+  theme_minimal() + xlim(0, -0.10)
