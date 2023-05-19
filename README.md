@@ -24,8 +24,9 @@
 ## 7.2. mov
 ### Se realiza un análisis exploratorio de los resultados del modelo anterior
 
-## 8. clean_code_ISA2023
+## 8. ISA2023
 ### Analysis of the effects of EU urban policies in Andalusia on residential mobility preferences. Using Diferences in Diferences and Structural Equation Modelling techniques we found a path that goes from the positive impact individual housing rehabilitation on housing satisfaction to a less willingless to leave the neighbourhood, through an indicator about satisfaction with the neighbors as a mediator (controlling for relevant confounders). However, we found no evidence of an ecological effect on the areas targeted by the policies.
+Written in R and Rmarkdown.
 
 ## PD1. Un análisis de los proyectos puede leerse en mi blog https://medium.com/@mromgar99
 ## PD2. Los datasets se pueden encontrar públicamente y algunos no los tengo disponibles actualmente. Si me los piden por comentarios, puedo intentar facilitarlos.
