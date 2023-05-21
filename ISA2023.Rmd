@@ -53,6 +53,8 @@ df <- read_delim(paste0("C:/Users/",USUARIO,"/Downloads/RCS_PT3_270223_Indexes.c
 
 df$P0109 <- ifelse(df$P0109 == 98, df$C02, df$P0109)
 
+df$P0109 <- ifelse(df$P0109 > 90, NA, df$0109)
+
 # deal with NA
 
 df[, !(names(df) %in% c("P0109"))] <- lapply(df[, !(names(df) %in% c("P0109"))], function(x) ifelse(x > 76, NA, x))
