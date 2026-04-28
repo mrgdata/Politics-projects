@@ -1,32 +1,96 @@
-# Proyectos de política
+# Proyectos de Ciencia Política
 
-## 1. *WVS_TFG_Soc* 
-### Es mi TFG, en donde aplico varias regresiones logísticas y bosques aleatorios para tratar de predecir la participación política en América del Norte y América Latina. Además, se elabora un extenso trabajo de manipulación de datos y se utilizan análisis de componentes principales para agrupar variables (Escrito en R).
+Repositorio con varios proyectos de investigación en comportamiento político, análisis electoral y políticas públicas. Cada proyecto está en su propia carpeta con scripts numerados por orden de ejecución.
 
-## 2. *voto de clase*
-### Realizo varias regresiones logísticas para evaluar qué clases sociales votan a los diferentes bloques ideológicos en España a lo largo del tiempo, controlando por otros factores sociodemográficos (Escrito en R).
+## Estructura del repositorio
 
-## 3. *france* 
-### Se elaboran diversos gráficos y análisis descriptivos para ver perfiles en el electorado a Le Pen y a Trump. También se elabora una regresión lineal múltiple con valores políticos (Escrito en R).
+```
+Politics-projects/
+│
+├── class-voting-spain/            # Voto de clase en España
+│   ├── data/                      # Datos CIS (.sav)
+│   ├── 01_data_prep.R             # Carga y recodificación
+│   ├── 02_models.R                # Regresiones logísticas
+│   └── 03_visualization.R         # Gráficos y tablas (+ ESS9)
+│
+├── political-participation-wvs/   # TFG: participación política (WVS7)
+│   ├── 01_data_prep.R             # Merge WVS + índices, variables
+│   ├── 02_eda_pca.R               # ACP y descriptivos
+│   ├── 03_random_forest.R         # 4 bosques aleatorios (NA/LA)
+│   ├── 04_logit_models.R          # Logit y modelos lineales
+│   └── 05_visualization.R         # Variable importance y descriptivos
+│
+├── electoral-inequality-ess/      # Desigualdad electoral en Europa
+│   ├── 01_data_prep.R             # Carga ESS9 + WID
+│   └── 02_analysis_viz.R          # Indicadores P90/P50 y gráficos
+│
+├── did-electoral-trends/          # DiD tendencias electorales
+│   ├── 01_data_prep.R             # Carga y variables de tratamiento
+│   ├── 02_models.R                # Modelos DiD (felm) y ANOVA
+│   └── 03_visualization.R         # Tendencias, boxplots, efectos
+│
+├── france-usa-electoral/          # Análisis electoral Francia y EEUU
+│   ├── 01_usa_density.R           # Densidad vs Trump/Biden
+│   ├── 02_france_aggregate.R      # Le Pen/Macron datos agregados
+│   └── 03_france_ess_individual.R # ESS9: logit voto Le Pen
+│
+├── residential-mobility-abm/      # Modelo de segregación residencial
+│   ├── renta_politica.nlogo       # Modelo ABM (NetLogo)
+│   └── analysis.R                 # Análisis exploratorio resultados
+│
+├── seville-historical-segregation/ # Segregación en Sevilla (S.XIX)
+│   ├── 01_data_prep.py            # Carga y limpieza de datos
+│   ├── 02_spatial_analysis.py     # I de Moran, autocorrelación
+│   ├── 03_mapping.py              # Mapa Folium interactivo
+│   └── 04_visualization.py        # Scatter plots y población histórica
+│
+├── party-positioning-ess/         # Posicionamiento de partidos
+│   └── Diagrama partidos.ipynb    # Notebook: ESS9 Alemania y España
+│
+├── urban-rehabilitation-isa/      # Políticas urbanas y movilidad
+│   ├── ISA2023.Rmd                # Informe R Markdown (DiD + SEM)
+│   └── ISA2023.html               # Informe renderizado
+│
+├── .gitignore
+├── README.md
+│
+└── old/                           # Archivos originales (sin reorganizar)
+    ├── scripts/r/                 # Scripts R originales
+    ├── scripts/py/                # Scripts Python originales
+    └── other/                     # Otros archivos originales
+```
 
-## 4. *did* 
-### Realizo varios ANOVAs y dos modelos de diferencias en diferencias con errores estándares agrupados para evaluar tendencias electorales en las provincias de Murcia y Sevilla (Escrito en R).
+## Proyectos
 
-## 5. *ESS_recode*
-### Se elabora un indicador de desigualdad P90/P50 basado en las proporciones de voto según renta y se compara con el mismo indicador de los ingresos, agrupado por países (Escrito en R).
+### 1. Voto de clase en España (`class-voting-spain/`)
+Regresiones logísticas para evaluar qué clases sociales votan a los diferentes bloques ideológicos en España (2011-2019), controlando por factores sociodemográficos. Incluye análisis de valores políticos con datos ESS9. **R**
 
-## 6. *diagrama partidos* 
-### Se elabora una recodificación de datos y un análisis sobre las características sociodemográficas y de opinión de partidos en Alemania y España (Escrito en Python).
+### 2. Participación política en las Américas (`political-participation-wvs/`)
+TFG. Bosques aleatorios y regresiones logísticas para predecir la participación política en América del Norte y Latinoamérica usando la World Values Survey Wave 7. Incluye ACP para agrupar variables. **R**
 
-## 7.1. *renta-politica* 
-### Se trata un modelo de segregación residencial similar al de Schelling, que evalúa si es mejor una política de renta mínima o de renta universal para la satisfacción de los agentes (Escrito en NetLogo).
+### 3. Desigualdad electoral en Europa (`electoral-inequality-ess/`)
+Indicador de desigualdad P90/P50 basado en las proporciones de voto según renta, comparado con el indicador de desigualdad de ingresos (WID), agrupado por países europeos. **R**
 
-## 7.2. mov
-### Se realiza un análisis exploratorio de los resultados del modelo anterior
+### 4. Diferencias en diferencias electorales (`did-electoral-trends/`)
+Modelos DiD con errores estándares agrupados y ANOVAs para evaluar el impacto de la reconversión industrial y la crisis económica en las tendencias electorales de Murcia y Sevilla. **R**
 
-## 8. ISA2023
-### Analysis of the effects of EU urban policies in Andalusia on residential mobility preferences. Using Diferences in Diferences and Structural Equation Modelling techniques we found a path that goes from the positive impact individual housing rehabilitation on housing satisfaction to a less willingless to leave the neighbourhood, through an indicator about satisfaction with the neighbors as a mediator (controlling for relevant confounders). However, we found no evidence of an ecological effect on the areas targeted by the policies.
-Written in R and Rmarkdown.
+### 5. Análisis electoral Francia y EEUU (`france-usa-electoral/`)
+Análisis descriptivos y regresión logística sobre los perfiles del electorado de Le Pen, Macron, Mélenchon y Trump/Biden. Datos agregados (WPID, INSEE, censos) e individuales (ESS9). **R**
 
-## PD1. Un análisis de los proyectos puede leerse en mi blog https://medium.com/@mromgar99
-## PD2. Los datasets se pueden encontrar públicamente y algunos no los tengo disponibles actualmente. Si me los piden por comentarios, puedo intentar facilitarlos.
+### 6. Modelo de segregación residencial (`residential-mobility-abm/`)
+Modelo de agentes tipo Schelling (NetLogo) que evalúa si es mejor una política de renta mínima o de renta universal para la satisfacción residencial. Incluye análisis exploratorio de los resultados en R. **NetLogo + R**
+
+### 7. Segregación histórica en Sevilla (`seville-historical-segregation/`)
+Análisis espacial de las parroquias de Sevilla en el siglo XIX: autocorrelación espacial (I de Moran), mapa interactivo Folium y evolución demográfica histórica. **Python**
+
+### 8. Posicionamiento de partidos (`party-positioning-ess/`)
+Visualización de las posiciones de los partidos políticos en Alemania y España según variables sociodemográficas y de opinión (ESS9). **Python (Jupyter)**
+
+### 9. Políticas urbanas y movilidad residencial (`urban-rehabilitation-isa/`)
+Análisis del efecto de las políticas de rehabilitación urbana de la UE en Andalucía sobre las preferencias de movilidad residencial. Usa DiD y Modelos de Ecuaciones Estructurales (SEM). **R Markdown**
+
+## Notas
+
+- **Datos locales**: la mayoría de los scripts cargan datos desde rutas locales. Si no se encuentran los archivos, se mostrará un mensaje indicando dónde colocarlos.
+- **Datasets públicos**: los datos se pueden encontrar públicamente (CIS, ESS, WVS, WID, INSEE, etc.).
+- Un análisis de los proyectos puede leerse en mi blog: https://medium.com/@mromgar99
