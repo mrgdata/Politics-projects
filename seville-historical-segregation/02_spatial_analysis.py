@@ -8,12 +8,17 @@ import numpy as np
 from esda.moran import Moran
 from libpysal.weights import KNN
 from matplotlib import pyplot as plt
+from importlib import import_module
+
+_df = import_module("00_defaults")
 
 
 class SpatialAutoCorrCalculator:
     """Calcula medidas de autocorrelación espacial a partir de coordenadas."""
 
-    def __init__(self, dataframe, lat_col="Lat_Center", lon_col="Lon_Center", k_neighbors=3):
+    def __init__(
+        self, dataframe, lat_col="Lat_Center", lon_col="Lon_Center", k_neighbors=3
+    ):
         self.df = dataframe.dropna(subset=[lat_col, lon_col, "Parroquia"]).copy()
         coords = self.df[[lat_col, lon_col]].values
         self.weights = KNN.from_array(coords, k=k_neighbors)
@@ -55,7 +60,9 @@ class SpatialAutoCorrCalculator:
 
         return mi.I, mi.p_sim
 
-    def create_spatial_scatter(self, size_col, color_col, title="Distribución espacial parroquias de Sevilla"):
+    def create_spatial_scatter(
+        self, size_col, color_col, title="Distribución espacial parroquias de Sevilla"
+    ):
         """Scatter plot espacial con tamaño y color."""
         plt.figure(figsize=(12, 8))
         sizes = pd.to_numeric(self.df[size_col])
@@ -63,20 +70,31 @@ class SpatialAutoCorrCalculator:
         display_sizes = (sizes / sizes.max()) * 1000
 
         scatter = plt.scatter(
-            self.df["Lon_Center"], self.df["Lat_Center"],
-            s=display_sizes, c=colors, cmap="RdYlGn_r",
-            alpha=0.7, edgecolors="black",
+            self.df["Lon_Center"],
+            self.df["Lat_Center"],
+            s=display_sizes,
+            c=colors,
+            cmap="RdYlGn_r",
+            alpha=0.7,
+            edgecolors="black",
         )
 
         for i, txt in enumerate(self.df["Parroquia"]):
-            plt.annotate(txt, (self.df["Lon_Center"].iloc[i], self.df["Lat_Center"].iloc[i]),
-                         fontsize=8, alpha=0.8, xytext=(5, 5), textcoords="offset points")
+            plt.annotate(
+                txt,
+                (self.df["Lon_Center"].iloc[i], self.df["Lat_Center"].iloc[i]),
+                fontsize=8,
+                alpha=0.8,
+                xytext=(5, 5),
+                textcoords="offset points",
+            )
 
         plt.colorbar(scatter, label=color_col)
         plt.xlabel("Longitud")
         plt.ylabel("Latitud")
         plt.title(title)
         plt.grid(True, linestyle="--", alpha=0.6)
+        plt.savefig(f"{_df.DIR_DATA}/seville_xix_map_{color_col}.png")
         plt.show()
 
     def create_flexible_scatter(self, x_col, y_col, size_col=None, color_col=None):
@@ -91,7 +109,9 @@ class SpatialAutoCorrCalculator:
             plot_kwargs["s"] = 100
 
         if color_col and color_col in self.df.columns:
-            plot_kwargs["c"] = pd.to_numeric(self.df[color_col], errors="coerce").fillna(0)
+            plot_kwargs["c"] = pd.to_numeric(
+                self.df[color_col], errors="coerce"
+            ).fillna(0)
             plot_kwargs["cmap"] = "RdYlGn_r"
         else:
             plot_kwargs["c"] = "steelblue"
@@ -101,7 +121,10 @@ class SpatialAutoCorrCalculator:
         if color_col:
             plt.colorbar(scatter, label=f"{color_col} (Rojo=Alto, Verde=Bajo)")
 
-        plt.title("Relación entre la densidad de los corrales y del resto de viviendas en cada parroquia", fontsize=14)
+        plt.title(
+            "Relación entre la densidad de los corrales y del resto de viviendas en cada parroquia",
+            fontsize=14,
+        )
         plt.suptitle("densidad = población / nº viviendas, tamaño=población total")
         plt.xlabel("Densidad del resto de viviendas")
         plt.ylabel("Densidad de los corrales")
@@ -112,13 +135,20 @@ class SpatialAutoCorrCalculator:
 
         if "Parroquia" in self.df.columns:
             for i, txt in enumerate(self.df["Parroquia"]):
-                plt.annotate(txt, (self.df[x_col].iloc[i], self.df[y_col].iloc[i]),
-                             fontsize=8, xytext=(5, 5), textcoords="offset points")
+                plt.annotate(
+                    txt,
+                    (self.df[x_col].iloc[i], self.df[y_col].iloc[i]),
+                    fontsize=8,
+                    xytext=(5, 5),
+                    textcoords="offset points",
+                )
+        plt.savefig(f"{_df.DIR_DATA}seville_xix_scatter.png")
         plt.show()
 
 
 if __name__ == "__main__":
     from importlib import import_module
+
     mod = import_module("01_data_prep")
     load_and_clean_data = mod.load_and_clean_data
     df = load_and_clean_data()

@@ -7,11 +7,13 @@ import pandas as pd
 import numpy as np
 import io
 import os
+from importlib import import_module
+
+_df = import_module("00_defaults")
+
 
 # --- Datos crudos embebidos (CSV) ---
-DIR_CSV_DATA = (
-    f"C:/Users/{os.getenv('USERNAME', 'user').lower()}/Downloads/cuadro_corrales_sevilla.csv"
-)
+DIR_CSV_DATA = _df.DIR_DATA + _df.FILENAME_CSV
 
 raw_csv_data = """Parroquia,Casas,Corrales (N-%_total_casas),Población,Vecinos_Corrales (N-%_total_poblacion),Lat_Center,Lon_Center
 "Santa Ana y la O","1195","69-5,77","17468","5230-29,94",37.3857,-6.0022
@@ -34,7 +36,7 @@ raw_csv_data = """Parroquia,Casas,Corrales (N-%_total_casas),Población,Vecinos_
 "Santa Marina","189","20-10,58","3254","1243-38,19",37.3982,-5.9889
 "S. Martín","427","13-3,04","3328","971-29,17",37.3948,-5.9937
 "S. Miguel","183","2-1,09","1599","141-8,81",37.3934,-5.9959
-"S. Nicolás","98","8-8,33","13df58","787-57,95",37.3878,-5.9902
+"S. Nicolás","98","8-8,33","1358","787-57,95",37.3878,-5.9902
 "Omnium Sactorum","807","38-4,70","8489","4175-49,18",37.3995,-5.9918
 "S. Pedro","235","7-2,97","1891","679-35,90",37.3930,-5.9898
 "S. Roque","431","92-21,30","7652","4240-55,41",37.3892,-5.9818
@@ -51,7 +53,9 @@ def load_and_clean_data():
         if os.path.exists(DIR_CSV_DATA):
             df = pd.read_csv(DIR_CSV_DATA)
         else:
-            print(f"Archivo CSV no encontrado en {DIR_CSV_DATA}. Usando datos embebidos.")
+            print(
+                f"Archivo CSV no encontrado en {DIR_CSV_DATA}. Usando datos embebidos."
+            )
             df = pd.read_csv(io.StringIO(raw_csv_data))
     except Exception as e:
         print(f"Error al leer datos CSV: {e}")
@@ -65,24 +69,36 @@ def load_and_clean_data():
     )
     df["Corrales_Pct"] = (
         df["Corrales (N-%_total_casas)"]
-        .astype(str).str.split("-").str[1]
-        .str.replace(",", ".").astype(float)
+        .astype(str)
+        .str.split("-")
+        .str[1]
+        .str.replace(",", ".")
+        .astype(float)
     )
     df["Vecinos_Corrales_Count"] = (
         df["Vecinos_Corrales (N-%_total_poblacion)"]
-        .astype(str).str.split("-").str[0]
-        .str.replace(".", "", regex=False).astype(int)
+        .astype(str)
+        .str.split("-")
+        .str[0]
+        .str.replace(".", "", regex=False)
+        .astype(int)
     )
     df["Vecinos_Corrales_Pct"] = (
         df["Vecinos_Corrales (N-%_total_poblacion)"]
-        .astype(str).str.split("-").str[1]
+        .astype(str)
+        .str.split("-")
+        .str[1]
         .str.replace(".", "", regex=False)
-        .str.replace(",", ".").astype(float)
+        .str.replace(",", ".")
+        .astype(float)
     )
-    df["Corrales_Density"] = round(df["Vecinos_Corrales_Count"] / df["Corrales_Count"], 2)
+    df["Corrales_Density"] = round(
+        df["Vecinos_Corrales_Count"] / df["Corrales_Count"], 2
+    )
     df["Households_Density"] = round(
         (df["Población"] - df["Vecinos_Corrales_Count"])
-        / (df["Casas"] - df["Corrales_Count"]), 2
+        / (df["Casas"] - df["Corrales_Count"]),
+        2,
     )
     df["Households_Density_log"] = np.log(df["Households_Density"]) + 1
     df["Corrales_Density_log"] = np.log(df["Corrales_Density"]) + 1
@@ -97,4 +113,8 @@ if __name__ == "__main__":
     df = load_and_clean_data()
     if df is not None:
         print(f"Datos listos: {len(df)} parroquias.")
-        print(df[["Parroquia", "Población", "Corrales_Density", "Households_Density"]].head())
+        print(
+            df[
+                ["Parroquia", "Población", "Corrales_Density", "Households_Density"]
+            ].head()
+        )
