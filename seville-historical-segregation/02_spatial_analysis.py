@@ -94,7 +94,7 @@ class SpatialAutoCorrCalculator:
         plt.ylabel("Latitud")
         plt.title(title)
         plt.grid(True, linestyle="--", alpha=0.6)
-        plt.savefig(f"{_df.DIR_DATA}/seville_xix_map_{color_col}.png")
+        plt.savefig(f"{_df.DIR_PLOT}/seville_xix_map_{color_col}.png")
         plt.show()
 
     def create_flexible_scatter(self, x_col, y_col, size_col=None, color_col=None):
@@ -142,7 +142,7 @@ class SpatialAutoCorrCalculator:
                     xytext=(5, 5),
                     textcoords="offset points",
                 )
-        plt.savefig(f"{_df.DIR_DATA}seville_xix_scatter.png")
+        plt.savefig(f"{_df.DIR_PLOT}seville_xix_scatter.png")
         plt.show()
 
 

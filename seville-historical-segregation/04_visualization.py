@@ -117,7 +117,7 @@ def plot_historical_population():
             fontsize=9,
         )
 
-    boundary_years = [1814, 1837, 1873]
+    boundary_years = [1814, 1837, 1874, 1914]
     for year in boundary_years:
         ax.axvline(x=year, color="black", linestyle=":", alpha=0.3)
 
@@ -125,7 +125,8 @@ def plot_historical_population():
         (1799, 1814, "Carlos IV y\nGuerra Indep."),
         (1814, 1837, "Fernando VII"),
         (1837, 1873, "Isabel II"),
-        (1873, 1920, "Restauración"),
+        (1874, 1914, "Restauración"),
+        (1914, 1920, "IGM"),
     ]
 
     y_top = ax.get_ylim()[1]
@@ -165,7 +166,7 @@ def plot_historical_population():
     ax.legend(handles=legend_elements, loc="lower right", title="Categorías de Datos")
 
     plt.tight_layout()
-    plt.savefig(f"{_df.DIR_DATA}/seville_population_evolution.png")
+    plt.savefig(f"{_df.DIR_PLOT}/seville_population_evolution.png")
     plt.show()
 
 

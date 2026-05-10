@@ -57,6 +57,7 @@ def load_and_clean_data():
                 f"Archivo CSV no encontrado en {DIR_CSV_DATA}. Usando datos embebidos."
             )
             df = pd.read_csv(io.StringIO(raw_csv_data))
+            df.to_csv(DIR_CSV_DATA)
     except Exception as e:
         print(f"Error al leer datos CSV: {e}")
         return None
