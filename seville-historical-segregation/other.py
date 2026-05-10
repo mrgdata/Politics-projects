@@ -4,6 +4,7 @@ import pandas as pd
 
 
 # 1. Definición de datos
+# Rodríguez Vázquez, A. L. (1995): 39-41; Aguado de los Reyes, J. (1996): 32-38.
 dict_xvi = {
     "Censos": 46,
     "Deudas": 19.6,
@@ -65,6 +66,8 @@ print("Tabla Comparativa de Inventarios:")
 print(df_comp.sort_values(by="Variación (%)", ascending=False))
 
 # Datos extraídos de la imagen
+# Rodríguez Vázquez, A. L. (1995): 41.
+
 categories = [
     "0/250.000",
     "250 / 500.000",
@@ -175,6 +178,7 @@ plt.show()
 
 ###############################
 # 1. Definición de datos
+# Cuenca Toribio, 1991: 155 (Cuadro I). Fernández Salinas, V. (2003): Cuadro 2 y 4, s/n.
 vecinos = {
     "1882 (est.)": 463,
     "1991": 64,

@@ -39,6 +39,7 @@ def plot_spatial_and_density(df_parishes):
 
 def plot_historical_population():
     """Evolución de la población de Sevilla (1799-1920)."""
+    # Cuenca Toribio, 1991: 16, 21 (Cuadro I); Braojos et al. (1990): 34, 57.
     data = {
         1799: [80598, "González de León"],
         1821: [75000, "Censo del Trienio"],

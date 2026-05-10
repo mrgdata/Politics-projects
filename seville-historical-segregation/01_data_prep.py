@@ -15,6 +15,7 @@ _df = import_module("00_defaults")
 # --- Datos crudos embebidos (CSV) ---
 DIR_CSV_DATA = _df.DIR_DATA + _df.FILENAME_CSV
 
+# Cuenca Toribio, 1991: 155 (Cuadro I). Latitude & Longitud added based on church locations in Google Maps.
 raw_csv_data = """Parroquia,Casas,Corrales (N-%_total_casas),Población,Vecinos_Corrales (N-%_total_poblacion),Lat_Center,Lon_Center
 "Santa Ana y la O","1195","69-5,77","17468","5230-29,94",37.3857,-6.0022
 "S. Andrés","223","8-3,58","1613","271-16,80",37.3934,-5.9926
