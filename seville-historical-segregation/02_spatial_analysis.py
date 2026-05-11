@@ -3,6 +3,8 @@ Sevilla siglo XIX - Análisis espacial
 Clase SpatialAutoCorrCalculator: I de Moran, scatter espacial
 """
 
+import os
+
 import pandas as pd
 import numpy as np
 from esda.moran import Moran
@@ -24,6 +26,8 @@ class SpatialAutoCorrCalculator:
         self.weights = KNN.from_array(coords, k=k_neighbors)
         self.weights.transform = "R"
         self.parish_names = self.df["Parroquia"].tolist()
+        if not os.path.exists(_df.DIR_PLOT):
+            os.makedirs(_df.DIR_PLOT)
 
     def get_morans_i(self, data_column, p_value_threshold=0.05):
         """Calcula e interpreta la I de Moran global."""
