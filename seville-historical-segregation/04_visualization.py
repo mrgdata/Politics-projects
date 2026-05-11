@@ -1,9 +1,11 @@
 """
 Sevilla siglo XIX - Visualizaciones
-Scatter plots de densidad, scatter espacial, evolución población histórica
+Scatter plots de densidad, scatter espacial, evolución población histórica,
+estructura patrimonial y evolución de corrales
 """
 
 import pandas as pd
+import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
 
@@ -39,19 +41,7 @@ def plot_spatial_and_density(df_parishes):
 
 def plot_historical_population():
     """Evolución de la población de Sevilla (1799-1920)."""
-    data = {
-        1799: [80598, "González de León"],
-        1821: [75000, "Censo del Trienio"],
-        1832: [96683, "Guía de Herrera Dávila"],
-        1857: [112529, "dummy", 34.89],
-        1860: [118298, "Censo Estatal"],
-        1877: [134318, "Censo Estatal", 36.78],
-        1887: [143182, "Censo Estatal"],
-        1897: [145728, "Censo Estatal"],
-        1900: [148315, "Censo Estatal", 37.42],
-        1910: [158287, "Censo Estatal"],
-        1920: [205529, "Censo Estatal"],
-    }
+    data = _df.POPULATION_DATA
 
     rows = []
     for year, vals in data.items():
@@ -117,7 +107,7 @@ def plot_historical_population():
             fontsize=9,
         )
 
-    boundary_years = [1814, 1837, 1873]
+    boundary_years = [1814, 1837, 1874, 1914]
     for year in boundary_years:
         ax.axvline(x=year, color="black", linestyle=":", alpha=0.3)
 
@@ -125,7 +115,8 @@ def plot_historical_population():
         (1799, 1814, "Carlos IV y\nGuerra Indep."),
         (1814, 1837, "Fernando VII"),
         (1837, 1873, "Isabel II"),
-        (1873, 1920, "Restauración"),
+        (1874, 1914, "Restauración"),
+        (1914, 1920, "IGM"),
     ]
 
     y_top = ax.get_ylim()[1]
@@ -165,7 +156,122 @@ def plot_historical_population():
     ax.legend(handles=legend_elements, loc="lower right", title="Categorías de Datos")
 
     plt.tight_layout()
-    plt.savefig(f"{_df.DIR_DATA}/seville_population_evolution.png")
+    plt.savefig(f"{_df.DIR_PLOT}/seville_population_evolution.png")
+    plt.show()
+
+
+def plot_patrimonio_evolution():
+    """Evolución de la estructura patrimonial (Inventarios Post-Mortem, S.XVI vs S.XVII)."""
+    df_comp = pd.DataFrame(
+        [_df.PATRIMONIO_XVI, _df.PATRIMONIO_XVII], index=["Siglo XVI", "Siglo XVII"]
+    ).T
+    df_comp["Variación (%)"] = df_comp["Siglo XVII"] - df_comp["Siglo XVI"]
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    df_comp[["Siglo XVI", "Siglo XVII"]].plot(
+        kind="bar", ax=ax, color=["#df4f4f", "#44d444"], edgecolor="black"
+    )
+
+    ax.set_title(
+        "Evolución de la Estructura Patrimonial (Inventarios Post-Mortem)",
+        fontsize=14, pad=20,
+    )
+    ax.set_ylabel("Porcentaje sobre el Total (%)")
+    ax.set_xlabel("Categorías de Bienes")
+    ax.grid(axis="y", linestyle="--", alpha=0.6)
+
+    for p in ax.patches:
+        ax.annotate(
+            f"{p.get_height()}%",
+            (p.get_x() + p.get_width() / 2.0, p.get_height()),
+            ha="center", va="center", xytext=(0, 9),
+            textcoords="offset points", fontsize=9,
+        )
+
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig(f"{_df.DIR_PLOT}/patrimonio_evolution.png")
+    plt.show()
+
+    print("Tabla Comparativa de Inventarios:")
+    print(df_comp.sort_values(by="Variación (%)", ascending=False))
+
+
+def plot_wealth_distribution():
+    """Distribución de bienes muebles e inmuebles por tramos de riqueza (S.XVI)."""
+    categories = list(_df.WEALTH_CATEGORIES)
+    muebles = list(_df.WEALTH_MUEBLES)
+    inmuebles = list(_df.WEALTH_INMUEBLES)
+
+    # Invertir para disposición visual (0/250.000 arriba)
+    categories.reverse()
+    muebles.reverse()
+    inmuebles.reverse()
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+
+    bar_width = 0.6
+    indices = np.arange(len(categories))
+
+    ax.barh(indices, muebles, bar_width, label="Muebles",
+            color="#df4f4f", edgecolor="black", linewidth=0.5)
+    ax.barh(indices, inmuebles, bar_width, left=muebles, label="Inmuebles",
+            color="#44d444", edgecolor="black", linewidth=0.5)
+
+    for i, (m, inm) in enumerate(zip(muebles, inmuebles)):
+        ax.text(m / 2, i, f"{m:.2f}%", ha="center", va="center",
+                color="black", fontsize=9, fontweight="bold")
+        ax.text(m + inm / 2, i, f"{inm:.2f}%", ha="center", va="center",
+                color="black", fontsize=9, fontweight="bold")
+
+    ax.set_title(
+        "Distribución de bienes muebles e inmuebles en el patrimonio post-morten",
+        pad=20, fontsize=12, fontweight="bold",
+    )
+    plt.suptitle(
+        "Sevilla, Siglo XVI (en maravedíes). Inmuebles: Censos, juros y fincas rústicas y urbanas"
+    )
+    ax.set_yticks(indices)
+    ax.set_yticklabels(categories, fontsize=10)
+    ax.set_xticks([0, 25, 50, 75, 100])
+    ax.set_xticklabels(["0,00%", "25,00%", "50,00%", "75,00%", "100,00%"], fontsize=10)
+    ax.grid(axis="x", linestyle="-", alpha=0.3)
+    ax.set_axisbelow(True)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.7, -0.05), ncol=2, frameon=False)
+    plt.figtext(0.05, 0.05, "Total de los bienes", ha="left", fontsize=10)
+
+    plt.tight_layout()
+    plt.savefig(f"{_df.DIR_PLOT}/wealth_distribution_xvi.png")
+    plt.show()
+
+
+def plot_corrales_evolution():
+    """Evolución del número de corrales y sus habitantes."""
+    df_comp = pd.DataFrame(
+        [_df.CORRALES_EVOLUCION_VECINOS, _df.CORRALES_EVOLUCION_CORRALES],
+        index=["Vecinos (en cientos)", "Corrales"],
+    ).T
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    df_comp[["Vecinos (en cientos)", "Corrales"]].plot(
+        kind="bar", ax=ax, color=["#df4f4f", "#44d444"], edgecolor="black"
+    )
+
+    ax.set_title("Evolución del número de corrales y sus habitantes", fontsize=14, pad=20)
+    ax.set_ylabel("Total")
+    ax.grid(axis="y", linestyle="--", alpha=0.6)
+
+    for p in ax.patches:
+        ax.annotate(
+            f"{p.get_height()}",
+            (p.get_x() + p.get_width() / 2.0, p.get_height()),
+            ha="center", va="center", xytext=(0, 9),
+            textcoords="offset points", fontsize=9,
+        )
+
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig(f"{_df.DIR_PLOT}/corrales_evolution.png")
     plt.show()
 
 
@@ -174,3 +280,6 @@ if __name__ == "__main__":
     if df is not None:
         plot_spatial_and_density(df)
     plot_historical_population()
+    plot_patrimonio_evolution()
+    plot_wealth_distribution()
+    plot_corrales_evolution()
