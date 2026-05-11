@@ -39,6 +39,7 @@ Politics-projects/
 │   └── analysis.R                 # Análisis exploratorio resultados
 │
 ├── seville-historical-segregation/ # Segregación en Sevilla (S.XIX)
+│   ├── 00_defaults.py             # Datos embedidos y variables globales
 │   ├── 01_data_prep.py            # Carga y limpieza de datos
 │   ├── 02_spatial_analysis.py     # I de Moran, autocorrelación
 │   ├── 03_mapping.py              # Mapa Folium interactivo
